@@ -125,7 +125,19 @@ namespace TRTCCSharpDemo
         [DllImport(@"imsdk.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private extern static void TIMAddRecvNewMsgCallback(delegateTIMRecvNewMsgCallback cb);
 
-        
+        /// <summary>
+        /// 接收新消息回调
+        /// </summary>
+        /// <param name="cb"></param>
+        [DllImport(@"imsdk.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        private extern static int TIMLogout(TIMCommCallback cb);
+
+        /// <summary>
+        /// 接收新消息回调
+        /// </summary>
+        /// <param name="cb"></param>
+        [DllImport(@"imsdk.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        private extern static int TIMUninit();
 
         /// <summary>
         /// 接收新消息回调
@@ -197,6 +209,8 @@ namespace TRTCCSharpDemo
 
         TIMCommCallback mycall3;
 
+        TIMCommCallback mycall_logout;
+
         public void ImInit()
         {
             int sdk_app_id = 1400473960;
@@ -212,6 +226,15 @@ namespace TRTCCSharpDemo
             TIMLogin(DataManager.GetInstance().userId, tLSSig.GenSig(DataManager.GetInstance().userId), mycall1);
 
             //CreateGroup();
+        }
+
+        public void unImInit()
+        {
+            mycall_logout = new TIMCommCallback(CommCallback);
+            int ret = TIMLogout(mycall_logout);
+
+            int ret1 = TIMUninit();
+            return;
         }
 
         public void Send_Message()

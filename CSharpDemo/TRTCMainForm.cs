@@ -480,6 +480,9 @@ namespace TRTCCSharpDemo
         /// </summary>
         private void Uninit()
         {
+
+            DataManager.GetInstance().unImInit();
+
             // 如果开启了自定义采集和渲染，则关闭功能，清理资源
             if (DataManager.GetInstance().isLocalVideoMirror && DataManager.GetInstance().isRemoteVideoMirror)
             {
